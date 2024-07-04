@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import axiosInstance from '../../Api/axios'
+import { useContext, useState } from 'react'; 
+import axiosInstance from '../../Api/axios';
+import { PlaceContext } from '../../Context/City';
+
 function CurrentWeather() {
-  const [place, setPlace] = useState('');
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState('');
+  const { place, setPlace, setSearchTrigger, searchTrigger } = useContext(PlaceContext); 
+  console.log(searchTrigger, 'cw');
 
   const handleSearch = async () => {
     if (place.trim() === '') {
@@ -12,8 +15,10 @@ function CurrentWeather() {
     }
     try {
       const response = await axiosInstance.get(`/weather/current/${place}`);
-      setWeather(response.data.data); 
+      console.log(response);
+      setWeather(response.data.data);
       setError('');
+      setSearchTrigger(prevState => !prevState);
     } catch (error) {
       setError('Could not fetch weather data. Please try again.');
       setWeather(null);
@@ -21,7 +26,7 @@ function CurrentWeather() {
   };
 
   return (
-    <div className='text-white bg-transparent shadow-2xl shadow-black inline-block p-5 rounded-md'>
+    <div className='text-white bg-transparent shadow-2xl shadow-black inline-block p-5 rounded-md '>
       <h1 className='text-2xl font-bold uppercase text-center m-2'>Live Weather</h1>
       <input
         type="text"
