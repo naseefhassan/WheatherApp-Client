@@ -107,15 +107,15 @@ function Forecast() {
   return (
     <>
       <h1 className="m-3 font-bold text-xl">Daily Average Temperature</h1>
-      <div className="bg-gray-500 bg-opacity-65 m-3 rounded-md p-3">
+      <div className="bg-gray-500 bg-opacity-65 m-3 rounded-md p-3  bg-fixed overflow-x-scroll overflow-hidden gap-2 px-2 no-scrollbar">
         <h1 className="font-bold text-xl mx-3 m-2 text-center sm:text-start">
           {city}
         </h1>
-        <div className="flex  bg-fixed overflow-x-scroll overflow-hidden justify-between gap-2 p-3 no-scrollbar ">
+        <div className="inline-flex  bg-fixed overflow-x-scroll overflow-hidden gap-2 px-2 no-scrollbar">
           {dailyAverages.map((item, index) => (
             <div
               key={index}
-              className="shadow-inner shadow-cyan-500  sm:w-48 flex flex-col items-center flex-wrap rounded-md px-4"
+              className="shadow-inner shadow-cyan-500  w-64 flex flex-col items-center flex-wrap rounded-md px-4"
             >
               <p>{item.dayName}</p>
               <p>{item.formattedDate}</p>
