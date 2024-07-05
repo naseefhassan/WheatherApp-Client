@@ -26,7 +26,6 @@ function Login() {
             const response = await axiosInstance.post('/login',values)
             const token = response.data.token
             localStorage.setItem('Jwt',token)
-            console.log(token);
             navigate('/')
         } catch (error) {
             if(error.response &&
