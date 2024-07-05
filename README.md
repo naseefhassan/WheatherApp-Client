@@ -9,6 +9,9 @@ This project is a weather dashboard application that allows users to register, l
 - **Weather Dashboard:** Displays current weather, 7-day forecast, and historical weather data for the past 7 days for a searched city.
 - **Favorite Cities:** Users can save favorite cities and view their weather data on the dashboard.
 
+## Report
+  -Due to some Technical issues i didn't complete the Past 7 days Climate monitor, I think the issue is with the Api while accessing the api it showing the error request limit reached,there is no issue with other api. Please consider this .
+
 ## API Endpoints
 
 - **User Authentication:**
