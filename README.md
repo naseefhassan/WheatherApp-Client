@@ -1,8 +1,50 @@
-# React + Vite
+# Weather Dashboard Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a weather dashboard application that allows users to register, login, search for weather information by city, view current, forecast, and historical weather data, and save favorite cities. 
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication:** User registration and login using JWT (JSON Web Tokens). Passwords are hashed and securely stored.
+- **Weather Data Integration:** Fetches weather data from a third-party API (e.g., OpenWeatherMap or Weatherstack).
+- **Weather Dashboard:** Displays current weather, 7-day forecast, and historical weather data for the past 7 days for a searched city.
+- **Favorite Cities:** Users can save favorite cities and view their weather data on the dashboard.
+
+## API Endpoints
+
+- **User Authentication:**
+  - `POST /register` - Register a new user.
+  - `POST /login` - Authenticate a user and return a JWT.
+
+- **Weather Data:**
+  - `GET /weather/current?city={city}` - Get current weather for a city.
+  - `GET /weather/forecast?city={city}` - Get 7-day weather forecast for a city.
+  - `GET /weather/historical?city={city}` - Get historical weather data for the past 7 days for a city.
+
+- **Favorite Cities:**
+  - `POST /favorites` - Add a city to the user's favorites.
+  - `GET /favorites` - Get the user's favorite cities and their weather data.
+
+## Technologies Used
+
+- **Backend:**
+  - Node.js
+  - Express.js
+  - MongoDB
+  - JWT for authentication
+
+- **Frontend:**
+  - React (Vite.JS)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- MongoDB
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   https://github.com/naseefhassan/WheatherApp-Client
