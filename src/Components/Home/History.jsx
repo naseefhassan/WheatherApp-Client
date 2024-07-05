@@ -1,26 +1,30 @@
 import { useContext, useEffect, useState } from "react";
 import HumidityImg from "../../assets/Images/cloud.png";
 import windImg from "../../assets/Images/wind-power.png";
-import axiosInstance from "../../Api/axios";
+import axiosInstance from "../../Api/axios"; // Replace with your axios instance
 import { PlaceContext } from "../../Context/City";
 
 function History() {
   const { place, searchTrigger } = useContext(PlaceContext);
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
-        console.log(place, 'place');
         const response = await axiosInstance.get(`/weather/historical/${place}`);
-        console.log(response.data.data);
-        setHistory(response.data.data.timelines.daily); 
+        setHistory(response.data.data.timelines.daily); // Adjust according to your API response structure
+        setLoading(false);
       } catch (error) {
-        console.error(error);
+        setError(error);
+        setLoading(false);
       }
     };
     fetchData();
   }, [searchTrigger, place]);
+
   const calculateDailyAverages = (dailyData) => {
     if (!dailyData.hourly || dailyData.hourly.length === 0) {
       return {
@@ -30,11 +34,11 @@ function History() {
         avgWindSpeed: 0
       };
     }
-  
+
     const avgTemp = dailyData.hourly.reduce((acc, cur) => acc + cur.values.temperature, 0) / dailyData.hourly.length;
     const avgHumidity = dailyData.hourly.reduce((acc, cur) => acc + cur.values.humidity, 0) / dailyData.hourly.length;
     const avgWindSpeed = dailyData.hourly.reduce((acc, cur) => acc + cur.values.windSpeed, 0) / dailyData.hourly.length;
-  
+
     return {
       date: dailyData.time,
       avgTemp,
@@ -42,7 +46,9 @@ function History() {
       avgWindSpeed
     };
   };
-  
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="text-white bg-fixed overflow-x-scroll overflow-hidden gap-2 px-2 no-scrollbar">
@@ -50,7 +56,7 @@ function History() {
         Past Climate
       </h1>
       <div className="inline-flex">
-        {history?.daily?.slice(0, 7).map(dayData => {
+        {history?.slice(0, 7).map((dayData) => {
           const averages = calculateDailyAverages(dayData);
           return (
             <div key={averages.date} className="bg-gray-500 bg-opacity-65 m-3 rounded-md p-2 px-5 mx-4 w-64">
@@ -71,7 +77,6 @@ function History() {
       </div>
     </div>
   );
-  
 }
 
 export default History;
