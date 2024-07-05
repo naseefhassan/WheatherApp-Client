@@ -3,6 +3,7 @@ import CurrentWheather from "../Components/Home/CurrentWheather";
 import SkyImg from '../assets/Images/Wheather.jpeg'
 import Forecast from "../Components/Home/Forecast";
 import Favorite from "../Components/Home/Favorite";
+import History from "../Components/Home/History";
 
 function HomePage() {
   return (
@@ -14,6 +15,7 @@ function HomePage() {
         </div>
         <div className="p-2">
           <Forecast/>
+          <History/>
         </div>
       </div>
     </>

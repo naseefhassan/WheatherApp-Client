@@ -7,6 +7,7 @@ const PlaceProvider = ({ children }) => {
   const [searchTrigger, setSearchTrigger] = useState(false);
   const [Favorite, setFavorite]= useState([])
 
+  // const Favorite = Reverse.reverse()
 
   return (
     <PlaceContext.Provider value={{ place, setPlace , searchTrigger, setSearchTrigger, Favorite, setFavorite }}>

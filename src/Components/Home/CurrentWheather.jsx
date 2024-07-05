@@ -5,7 +5,8 @@ import { PlaceContext } from "../../Context/City";
 function CurrentWeather() {
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState("");
-  const { place, setPlace, setSearchTrigger, setFavorite } = useContext(PlaceContext);
+  const { place, setPlace, setSearchTrigger, } =
+    useContext(PlaceContext);
 
   const handleSearch = async () => {
     if (place.trim() === "") {
@@ -23,44 +24,40 @@ function CurrentWeather() {
     }
   };
 
-  const handleFavorite = () => {
-    if (!weather) return;
+  const handleFavorite =async () => {
+    const favorites = {
+      weather: weather.name,
+      temp: weather.main.temp,
+      description: weather.weather[0].description,
+      feelsLike: weather.main.feels_like,
+      wind:weather.wind.speed,
+      humidity:weather.main.humidity
+    };
+    await axiosInstance.post("/favorites", favorites);
+    setSearchTrigger((prevState) => !prevState);
 
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    const alreadyExists = storedFavorites.some(
-      (fav) => fav.id === weather.id
-    );
-
-    if (alreadyExists) {
-      setError("City is already in your favorites");
-      return;
-    }
-
-    const newFavorites = [...storedFavorites, weather];
-    localStorage.setItem("favorites", JSON.stringify(newFavorites));
-    setFavorite(newFavorites);
-    setError(""); // Clear any previous errors
   };
-
   return (
     <div className="text-white bg-transparent shadow-2xl shadow-black inline-block p-5 rounded-md">
-      <h1 className="text-2xl font-bold uppercase text-center m-2">Live Weather</h1>
-     <div className="flex">
-     <input
-        type="text"
-        name="place"
-        onChange={(e) => setPlace(e.target.value)}
-        value={place}
-        placeholder="Search City/Place"
-        className="p-1 rounded-md text-black text-sm text-center"
-      />
-      <button
-        onClick={handleSearch}
-        className="ml-2 p-1 bg-blue-500 rounded-md text-sm"
-      >
-        Search
-      </button>
-     </div>
+      <h1 className="text-2xl font-bold uppercase text-center m-2">
+        Live Weather
+      </h1>
+      <div className="flex">
+        <input
+          type="text"
+          name="place"
+          onChange={(e) => setPlace(e.target.value)}
+          value={place}
+          placeholder="Search City/Place"
+          className="p-1 rounded-md text-black text-sm text-center"
+        />
+        <button
+          onClick={handleSearch}
+          className="ml-2 p-1 bg-blue-500 rounded-md text-sm"
+        >
+          Search
+        </button>
+      </div>
       {error && <p className="text-red-500 text-[12px] text-center">{error}</p>}
       {weather && (
         <>

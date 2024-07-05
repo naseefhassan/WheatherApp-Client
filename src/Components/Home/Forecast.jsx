@@ -23,7 +23,6 @@ function Forecast() {
             response = await axios.get(
                 `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=31e39595099551de72198cdd7e62341e`
             );
-            console.log(response);
         }
 
         const data = response.data;
